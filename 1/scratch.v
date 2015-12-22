@@ -1,3 +1,5 @@
+Module Playground1.
+
 Inductive day : Type :=
   | monday : day
   | tuesday : day
@@ -103,3 +105,5 @@ Proof. simpl. reflexivity. Qed.
 
 Example test_andb34: (andb3 true true false) = false.
 Proof. simpl. reflexivity. Qed.
+
+End Playground1.
