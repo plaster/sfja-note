@@ -200,4 +200,7 @@ Notation "x * y" := (mult x y) (at level 40, left associativity) : nat_scope.
 
 (* nat_scope ってなんだろう？ *)
 
+Check (0 + (1 + 1)).
+Check (0 + 1) + 1.
+
 End Playground2.
