@@ -106,4 +106,41 @@ Proof. simpl. reflexivity. Qed.
 Example test_andb34: (andb3 true true false) = false.
 Proof. simpl. reflexivity. Qed.
 
+Inductive nat : Type :=
+| O : nat
+| S : nat -> nat.
+
+Definition pred (n: nat) : nat :=
+match n with
+| O => O
+| S n' => n'
+end.
+
 End Playground1.
+
+Definition minustwo (n: nat) : nat :=
+match n with
+| O => O
+| S O => O
+| S (S n') => n'
+end.
+
+Check S( S( S( S O ) ) ).
+Eval simpl in (minustwo 11).
+Check S.
+Check pred.
+Check minustwo.
+
+Fixpoint evenb (n:nat) : bool :=
+match n with
+| O => true
+| S O => false
+| S (S n') => evenb n'
+end.
+
+Definition oddb (n:nat) : bool := negb (evenb n).
+
+Eval simpl in ( evenb 10 ). (* true *)
+Eval simpl in ( evenb 9).   (* false *)
+Eval simpl in ( oddb 10 ).  (* oddb 10 (!?) *)
+Eval simpl in ( oddb 9).    (* oddb 9 (!?) *)
