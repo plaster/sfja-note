@@ -118,6 +118,8 @@ end.
 
 End Playground1.
 
+Module Playground2.
+
 Definition minustwo (n: nat) : nat :=
 match n with
 | O => O
@@ -144,3 +146,11 @@ Eval simpl in ( evenb 10 ). (* true *)
 Eval simpl in ( evenb 9).   (* false *)
 Eval simpl in ( oddb 10 ).  (* oddb 10 (!?) *)
 Eval simpl in ( oddb 9).    (* oddb 9 (!?) *)
+
+Example test_oddb1: (oddb (S O)) = true.
+Proof. simpl. reflexivity. Qed.
+Example test_oddb2: (oddb (S (S (S (S O))))) = false.
+Proof. simpl. reflexivity. Qed.
+
+
+End Playground2.
