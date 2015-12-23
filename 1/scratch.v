@@ -203,4 +203,32 @@ Notation "x * y" := (mult x y) (at level 40, left associativity) : nat_scope.
 Check (0 + (1 + 1)).
 Check (0 + 1) + 1.
 
+Fixpoint beq_nat (n m : nat) : bool :=
+match n with
+| O => match m with
+  | O => true
+  | S _ => false
+  end
+| S n' => match m with
+  | O => false
+  | S m' => beq_nat n' m'
+  end
+end.
+
+Fixpoint ble_nat (n m : nat) : bool :=
+match n with
+| O => true
+| S n' => match m with
+  | O => false
+  | S m' => ble_nat n' m'
+  end
+end.
+
+Example test_ble_nat1: (ble_nat 2 2) = true.
+Proof. simpl. reflexivity. Qed.
+Example test_ble_nat2: (ble_nat 2 4) = true.
+Proof. simpl. reflexivity. Qed.
+Example test_ble_nat3: (ble_nat 4 2) = false.
+Proof. simpl. reflexivity. Qed.
+
 End Playground2.
