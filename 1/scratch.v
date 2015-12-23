@@ -239,5 +239,19 @@ Proof. simpl. reflexivity. Qed.
 Example test_blt_nat3: (blt_nat 4 2) = false.
 Proof. simpl. reflexivity. Qed.
 
+Theorem plus_O_n : forall n:nat, 0 + n = n.
+Proof.
+  simpl. reflexivity. Qed.
+
+(*
+Theorem plus_n_0 : forall n:nat, n + 0 = n.
+Proof.
+  simpl. reflexivity. Qed.
+  (* Error: Impossible to unify "n" with "n + 0". *)
+*)
+
+Eval simpl in (forall n:nat, n + 0 = n).
+Eval simpl in (forall n:nat, 0 + n = n).
+
 
 End Playground2.
