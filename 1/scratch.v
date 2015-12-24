@@ -155,10 +155,10 @@ Proof. simpl. reflexivity. Qed.
 Fixpoint plus (n:nat) (m:nat) : nat :=
 match n with
 | O => m
-| S n' => plus n' (S m)
 (*
-| S n' => S( plus n' m )
+| S n' => plus n' (S m)
 *)
+| S n' => S( plus n' m )
 end.
 
 Eval simpl in (plus (S (S (S O))) (S (S O)) ).
