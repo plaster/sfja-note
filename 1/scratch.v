@@ -254,7 +254,16 @@ Proof.
 *)
 
 Eval simpl in (forall n:nat, n + 0 = n).
+(*
+scripts
+     = forall n : nat, n + 0 = n
+     : Prop
+*)
 Eval simpl in (forall n:nat, 0 + n = n).
-
+(*
+scripts
+     = forall n : nat, n = n
+     : Prop
+*)
 
 End Playground2.
