@@ -265,5 +265,6 @@ scripts
      = forall n : nat, n = n
      : Prop
 *)
+(* 違い：後者は、最初の引数が0なので、match clauseが選べる。再帰不要。 *)
 
 End Playground2.
