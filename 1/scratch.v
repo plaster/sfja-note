@@ -290,4 +290,14 @@ Proof.
   reflexivity.
   Qed.
 
+Theorem mult_O_plus : forall n m : nat,
+  (0 + n) * m = n * m.
+Proof.
+  intros n m.
+  rewrite -> plus_O_n.
+  reflexivity.
+  Qed.
+
+
+
 End Playground2.
