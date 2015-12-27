@@ -301,7 +301,9 @@ Proof.
 Theorem mult_1_plus : forall n m : nat,
   (1 + n) * m = m + (n * m).
 Proof.
-  Admitted.
+  intros n m.
+  reflexivity.
+  Qed.
 
 
 End Playground2.
