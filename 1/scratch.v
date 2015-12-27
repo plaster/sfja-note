@@ -267,4 +267,21 @@ scripts
 *)
 (* 違い：後者は、最初の引数が0なので、match clauseが選べる。再帰不要。 *)
 
+Theorem plus_id_example : forall n m : nat,
+  n = m ->
+  n + m = m + n.
+
+Proof.
+  intros n m.
+  intros H.
+  rewrite -> H.
+  reflexivity.
+  Qed.
+
+Theorem plus_id_exercise : forall n m o : nat,
+  n = m -> m = o -> n + m = m + o.
+
+Proof.
+  Admitted.
+
 End Playground2.
