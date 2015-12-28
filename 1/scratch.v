@@ -324,6 +324,15 @@ Proof.
   simpl. reflexivity.
   Qed.
 
+Theorem zero_nbeq_plus_1 : forall n : nat,
+  beq_nat 0 (n + 1) = false.
+Proof.
+  intros n.
+  destruct n as [|n'].
+  simpl. reflexivity.
+  simpl. reflexivity.
+  Qed.
+
 
 
 End Playground2.
