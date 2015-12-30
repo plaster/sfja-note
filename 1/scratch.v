@@ -378,4 +378,21 @@ Proof.
     reflexivity.
   Qed.
 
+Theorem andb_true_elim2 : forall b c : bool,
+  andb b c = true -> c = true.
+Proof.
+  intros b c H.
+  destruct c.
+  Case "c = true".
+    reflexivity.
+  Case "c = false".
+    rewrite <- H.
+    destruct b.
+    SCase "b = true".
+      reflexivity.
+    SCase "b = false".
+      reflexivity.
+  Qed.
+
+
 End Playground2.
