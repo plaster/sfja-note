@@ -413,4 +413,33 @@ Proof.
     simpl. rewrite <- IHn'. reflexivity.
   Qed.
 
+Theorem mult_0_r : forall n : nat, n * 0 = 0.
+Proof.
+  intros n. induction n as [| n'].
+  Case "n = 0".
+    simpl. reflexivity.
+  Case "n = S(n')".
+    simpl. rewrite -> IHn'. reflexivity.
+  Qed.
+
+Theorem plus_n_Sm : forall n m : nat, S(n + m) = n + S(m).
+Proof.
+  intros n m.
+  induction n as [|n'].
+  Case "n = 0".
+    simpl. reflexivity.
+  Case "n = S(n')".
+    simpl. rewrite -> IHn'. reflexivity.
+  Qed.
+
+Theorem plus_comm : forall n m : nat, n + m = m + n.
+Proof.
+  intros n m.
+  induction m as [|m'].
+  Case "m = 0".
+    simpl. rewrite -> plus_0_r. reflexivity.
+  Case "m = S(m')".
+    simpl. rewrite <- IHm'. rewrite -> plus_n_Sm. reflexivity.
+  Qed.
+
 End Playground2.
