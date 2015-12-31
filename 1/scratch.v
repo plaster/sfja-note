@@ -404,4 +404,13 @@ Proof.
     simpl. rewrite -> IHn'. reflexivity.
   Qed.
 
+Theorem minus_diag : forall n, minus n n = 0.
+Proof.
+  intros n. induction n as [| n'].
+  Case "n = 0".
+    simpl. reflexivity.
+  Case "n = S n'".
+    simpl. rewrite <- IHn'. reflexivity.
+  Qed.
+
 End Playground2.
