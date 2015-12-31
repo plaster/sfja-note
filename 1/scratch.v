@@ -251,6 +251,7 @@ Theorem plus_n_0 : forall n:nat, n + 0 = n.
 Proof.
   simpl. reflexivity. Qed.
   (* Error: Impossible to unify "n" with "n + 0". *)
+  (* see plus_0_r *)
 *)
 
 Eval simpl in (forall n:nat, n + 0 = n).
@@ -394,5 +395,13 @@ Proof.
       reflexivity.
   Qed.
 
+Theorem plus_0_r : forall n : nat, n + 0 = n.
+Proof.
+  intros n. induction n as [| n'].
+  Case "n = 0".
+    simpl. reflexivity.
+  Case "n = S n'".
+    simpl. rewrite -> IHn'. reflexivity.
+  Qed.
 
 End Playground2.
