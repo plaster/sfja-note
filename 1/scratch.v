@@ -457,4 +457,36 @@ Lemma double_plus : forall n : nat, double n = n + n.
     simpl. rewrite -> IHn. rewrite -> plus_n_Sm. reflexivity.
   Qed.
 
+(* Exercise destruct_induction
+ * induction は コンテキストに induction hypothesis が入る。natでなくても使える。
+ *)
+(*
+Inductive tree : Type :=
+| Leaf
+| Node : tree -> tree -> tree.
+
+Fixpoint tree_size (t : tree) : nat :=
+  match t with
+  | Leaf => 1
+  | Node t' t'' => tree_size t' + tree_size t''
+  end.
+
+Theorem tree_size_plus : forall t u : tree, tree_size(Node t u) = tree_size t + tree_size u.
+  intros t u.
+  destruct t.
+  Case "t = Leaf". simpl. reflexivity.
+  Case "t = Node(t1 t2)". simpl. reflexivity.
+  Qed.
+
+Theorem tree_size_swap : forall t u : tree, tree_size(Node t u) = tree_size(Node u t).
+  intros t u.
+  induction u.
+  Case "u = Leaf". simpl.
+    induction t.
+      simpl. reflexivity.
+      simpl. rewrite <- tree_size_plus. rewrite <- plus_n_Sm. rewrite -> plus_0_r. reflexivity.
+  Case "u = Node(t1 t2)". simpl.
+    ...
+*)
+
 End Playground2.
