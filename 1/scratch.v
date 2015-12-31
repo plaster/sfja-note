@@ -442,4 +442,19 @@ Proof.
     simpl. rewrite <- IHm'. rewrite -> plus_n_Sm. reflexivity.
   Qed.
 
+Fixpoint double (n : nat) : nat :=
+  match n with
+  | 0 => 0
+  | S(n') => S( S( double n' ))
+  end.
+
+Lemma double_plus : forall n : nat, double n = n + n.
+  intros n.
+  induction n.
+  Case "n = 0".
+    simpl. reflexivity.
+  Case "n = S(n')".
+    simpl. rewrite -> IHn. rewrite -> plus_n_Sm. reflexivity.
+  Qed.
+
 End Playground2.
