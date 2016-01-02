@@ -489,7 +489,6 @@ Theorem tree_size_swap : forall t u : tree, tree_size(Node t u) = tree_size(Node
     ...
 *)
 
-End Playground2.
 
 (* Exercise plus_comm_informal
 
@@ -514,3 +513,20 @@ End Playground2.
    したがって n + m = m + n が成立する。これは、直後の値について帰納法の仮定が成り立つことを示している。
    (証明終わり)
  *)
+
+Theorem beq_nat_refl : forall n, true = beq_nat n n.
+Proof. induction n. simpl. reflexivity.
+  simpl. rewrite <- IHn. reflexivity.
+  Qed.
+
+(* Exercise beq_nat_refl_informal
+ 定理：任意の n について n ≧ n は常に真である
+ 証明：n についての帰納法を適用する。
+ * n = 0 のとき: 0 ≧ 0 は真である。これは「≧」の定義より直ちに導かれる。
+ * n = S(n') のとき: 帰納法の仮定より n' ≧ n' は真である。
+   ここで「≧」の定義より S(n') ≧ S(n') も真である。
+   これは成立を示すべき式「n ≧ n は真である」そのものなので、直後の値について帰納法の仮定が成立することが示された。
+ (証明終わり)
+*)
+
+End Playground2.
