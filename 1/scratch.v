@@ -511,7 +511,7 @@ Theorem tree_size_swap : forall t u : tree, tree_size(Node t u) = tree_size(Node
    + の定義にしたがって右辺を変形すると：
    S(m' + n) = S(m') + n = m + n
    したがって n + m = m + n が成立する。これは、直後の値について帰納法の仮定が成り立つことを示している。
-   (証明終わり)
+ (証明終わり)
  *)
 
 Theorem beq_nat_refl : forall n, true = beq_nat n n.
