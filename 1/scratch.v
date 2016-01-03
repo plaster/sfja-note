@@ -536,4 +536,21 @@ Proof. induction n. simpl. reflexivity.
  (証明終わり)
 *)
 
+Theorem plus_swap : forall n m p : nat,
+  n + (m + p) = m + (n + p).
+Proof.
+  intros n m p.
+  assert (H: (m + n) + p = m + (n + p)).
+    Case "Proof of assertion".
+      rewrite <- plus_assoc. reflexivity.
+  rewrite <- H.
+  assert (H': m + n = n + m).
+    Case "Proof of assertion".
+      rewrite <- plus_comm. reflexivity.
+  rewrite -> H'.
+  rewrite <- plus_assoc.
+  reflexivity.
+  Qed.
+
+
 End Playground2.
