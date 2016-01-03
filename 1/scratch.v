@@ -562,7 +562,12 @@ Proof.
       SCase "m=S(m')".
       simpl. rewrite -> IHm. simpl. reflexivity.
   Case "n = S(n')".
-    simpl.
-  Admitted.
+    induction m as [| m'].
+      SCase "m=0".
+        admit.
+      SCase "m=S(m')".
+        admit.
+  Qed.
+
 
 End Playground2.
