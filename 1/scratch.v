@@ -552,5 +552,17 @@ Proof.
   reflexivity.
   Qed.
 
+Theorem mult_comm: forall m n : nat,
+  m * n = n * m.
+Proof.
+  intros m n.
+  induction n as [| n'].
+  Case "n=0".
+    induction m. SCase "m=0". reflexivity.
+      SCase "m=S(m')".
+      simpl. rewrite -> IHm. simpl. reflexivity.
+  Case "n = S(n')".
+    simpl.
+  Admitted.
 
 End Playground2.
