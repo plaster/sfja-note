@@ -489,6 +489,13 @@ Theorem tree_size_swap : forall t u : tree, tree_size(Node t u) = tree_size(Node
     ...
 *)
 
+Theorem plus_assoc : forall n m p : nat,
+  n + (m + p) = (n + m) + p.
+Proof.
+  intros n m p. induction n as [| n'].
+  Case "n = 0". simpl. reflexivity.
+  Case "n = S(n')". simpl. rewrite -> IHn'. reflexivity.
+  Qed.
 
 (* Exercise plus_comm_informal
 
