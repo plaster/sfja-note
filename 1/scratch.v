@@ -561,13 +561,21 @@ Proof.
     induction m. SCase "m=0". reflexivity.
       SCase "m=S(m')".
       simpl. rewrite -> IHm. simpl. reflexivity.
-  Case "n = S(n')".
+  Case "n=S(n')".
+    simpl.
     induction m as [| m'].
       SCase "m=0".
-        admit.
+        simpl. rewrite <- IHn'. simpl. reflexivity.
       SCase "m=S(m')".
+        simpl. rewrite -> IHm'. rewrite -> plus_swap.
+        assert (Hnnm: n' + n' * m' = n' * S m').
+          admit.
+        rewrite <- Hnnm. reflexivity.
         admit.
   Qed.
+        
+            
+          
 
 
 End Playground2.
