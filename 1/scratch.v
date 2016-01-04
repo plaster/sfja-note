@@ -563,14 +563,14 @@ Proof.
       simpl. rewrite -> IHm. simpl. reflexivity.
   Case "n=S(n')".
     simpl.
+    rewrite <- IHn'.
     induction m as [| m'].
       SCase "m=0".
-        simpl. rewrite <- IHn'. simpl. reflexivity.
+        simpl. reflexivity.
       SCase "m=S(m')".
-        simpl. rewrite -> IHm'. rewrite -> plus_swap.
-        assert (Hnnm: n' + n' * m' = n' * S m').
-          admit.
-        rewrite <- Hnnm. reflexivity.
+        simpl. rewrite -> IHm'.
+        SSCase "IHm' conclusion". rewrite -> plus_swap. reflexivity.
+        SSCase "IHm' premise".
         admit.
   Qed.
         
