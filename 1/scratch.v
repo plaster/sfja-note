@@ -552,35 +552,22 @@ Proof.
   reflexivity.
   Qed.
 
-(*
-Lemma plus_1: forall n m : nat,
-  n = m -> S(n) = S(m).
+Lemma mult_r_dec: forall m n : nat,
+  m * S n = m + m * n.
 Proof.
-  intros n m.
-  intros H.
-  rewrite -> H. reflexivity.
+  intros m n.
+  induction m as [|m'].
+    Case "m=0". reflexivity.
+    Case "m=Sm'".
+      simpl. rewrite -> IHm'.
+      assert (HL: n + (m' + m' * n) = (n + m') + m' * n).
+        rewrite -> plus_assoc. reflexivity.
+      assert (HR: m' + (n + m' * n) = (m' + n) + m' * n).
+        rewrite -> plus_assoc. reflexivity.
+      rewrite -> HL. rewrite -> HR.
+      assert (Hnm': n + m' = m' + n). rewrite -> plus_comm. reflexivity.
+      rewrite -> Hnm'. reflexivity.
   Qed.
-
-Lemma minus_1: forall n m: nat,
-  S(n) = S(m) -> n = m.
-Proof.
-  intros n m. intros H.
-  ...
-   
-
-Lemma minus_left: forall n m p: nat,
-  p + n = p + m -> n = m.
-  intros n m p.
-  intros H.
-  induction p as [|p'].
-    Case "p=0". simpl.
-      assert (H0: n = 0 + n). rewrite <- plus_O_n. reflexivity. 
-      rewrite -> H0. rewrite -> H. reflexivity.
-    Case "p=Sp'". rewrite -> IHp'.
-      SCase "IHp' conclusion". reflexivity.
-      SCase "IHp' premise". 
-      ...
-*)
 
 Theorem mult_comm: forall m n : nat,
   m * n = n * m.
@@ -592,19 +579,8 @@ Proof.
   Case "n=S(n')".
     simpl.
     rewrite <- IHn'.
-    induction m as [| m'].
-      SCase "m=0".
-        simpl. reflexivity.
-      SCase "m=S(m')".
-        simpl. rewrite -> plus_swap.
-        assert (H: m' * S n' = m' + m' * n').
-          SSCase "proof of assertion H".
-          admit.
-        rewrite -> H. reflexivity.
+    rewrite <- mult_r_dec.
+    reflexivity.
   Qed.
-        
-            
-          
-
 
 End Playground2.
