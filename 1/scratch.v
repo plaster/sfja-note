@@ -588,9 +588,7 @@ Proof.
   intros m n.
   induction n as [| n'].
   Case "n=0".
-    induction m. SCase "m=0". reflexivity.
-      SCase "m=S(m')".
-      simpl. rewrite -> IHm. simpl. reflexivity.
+    rewrite -> mult_0_r. reflexivity.
   Case "n=S(n')".
     simpl.
     rewrite <- IHn'.
