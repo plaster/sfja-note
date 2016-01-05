@@ -596,10 +596,11 @@ Proof.
       SCase "m=0".
         simpl. reflexivity.
       SCase "m=S(m')".
-        simpl. rewrite -> IHm'.
-        SSCase "IHm' conclusion". rewrite -> plus_swap. reflexivity.
-        SSCase "IHm' premise".
-        admit.
+        simpl. rewrite -> plus_swap.
+        assert (H: m' * S n' = m' + m' * n').
+          SSCase "proof of assertion H".
+          admit.
+        rewrite -> H. reflexivity.
   Qed.
         
             
