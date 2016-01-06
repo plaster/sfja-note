@@ -578,4 +578,68 @@ Proof.
     reflexivity.
   Qed.
 
+Theorem ble_nat_refl : forall n:nat,
+  true = ble_nat n n.
+Proof.
+  (* 予想: inductionが必要。そのままじゃ簡約できないし、destructしてもそこで詰む。 *)
+  intros n.
+  induction n as [|n'].
+    Case "n=0". simpl. reflexivity.
+    Case "n=Sn'". simpl. rewrite <- IHn'. reflexivity.
+  Qed.
+
+Theorem zero_nbeq_S : forall n:nat,
+  beq_nat 0 (S n) = false.
+Proof.
+  (* 予想: 簡約だけで終わる。 *)
+  reflexivity. Qed.
+
+Theorem andb_false_r : forall b : bool,
+  andb b false = false.
+Proof.
+  (* 予想: 簡約のためにはbが邪魔。destructで十分。 *)
+  intros b. destruct b. reflexivity. reflexivity. Qed.
+
+Theorem plus_ble_compat_l : forall n m p : nat,
+  ble_nat n m = true -> ble_nat (p + n) (p + m) = true.
+Proof.
+  (* 予想: pについてのinduction。 *)
+  intros n m p. intro H.
+  induction p as [|p'].
+    Case "p=0". simpl. rewrite -> H. reflexivity.
+    Case "p=Sp'". simpl. rewrite -> IHp'. reflexivity.
+  Qed.
+
+Theorem S_nbeq_0 : forall n:nat,
+  beq_nat (S n) 0 = false.
+Proof. (* 予想: reflexivityで終了 *)
+  reflexivity. Qed.
+
+Theorem mult_1_l : forall n:nat, 1 * n = n.
+Proof. (* 予想: 簡約だけで終了。 *)
+  intros n.
+  simpl.
+  rewrite -> plus_0_r. (* 残念 rewriteが必要だった。 これは中でinductionしてる。 *)
+  reflexivity.
+  Qed.
+
+Theorem all3_spec : forall b c : bool,
+    orb
+      (andb b c)
+      (orb (negb b)
+               (negb c))
+  = true.
+Proof.
+Admitted.
+
+Theorem mult_plus_distr_r : forall n m p : nat,
+  (n + m) * p = (n * p) + (m * p).
+Proof.
+Admitted.
+
+Theorem mult_assoc : forall n m p : nat,
+  n * (m * p) = (n * m) * p.
+Proof.
+Admitted.
+
 End Playground2.
