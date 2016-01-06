@@ -552,14 +552,14 @@ Proof.
   reflexivity.
   Qed.
 
-Lemma mult_r_dec: forall m n : nat,
-  m * S n = m + m * n.
+Lemma mult_m_Sn: forall m n : nat,
+  m + m * n = m * S n.
 Proof.
   intros m n.
   induction m as [|m'].
     Case "m=0". reflexivity.
     Case "m=Sm'".
-      simpl. rewrite -> IHm'.
+      simpl. rewrite <- IHm'.
       assert (HL: n + (m' + m' * n) = (n + m') + m' * n).
         rewrite -> plus_assoc. reflexivity.
       assert (HR: m' + (n + m' * n) = (m' + n) + m' * n).
@@ -579,7 +579,7 @@ Proof.
   Case "n=S(n')".
     simpl.
     rewrite <- IHn'.
-    rewrite <- mult_r_dec.
+    rewrite -> mult_m_Sn.
     reflexivity.
   Qed.
 
