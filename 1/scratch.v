@@ -560,13 +560,8 @@ Proof.
     Case "m=0". reflexivity.
     Case "m=Sm'".
       simpl. rewrite <- IHm'.
-      assert (HL: n + (m' + m' * n) = (n + m') + m' * n).
-        rewrite -> plus_assoc. reflexivity.
-      assert (HR: m' + (n + m' * n) = (m' + n) + m' * n).
-        rewrite -> plus_assoc. reflexivity.
-      rewrite -> HL. rewrite -> HR.
-      assert (Hnm': n + m' = m' + n). rewrite -> plus_comm. reflexivity.
-      rewrite -> Hnm'. reflexivity.
+      rewrite <- plus_swap.
+      reflexivity.
   Qed.
 
 Theorem mult_comm: forall m n : nat,
