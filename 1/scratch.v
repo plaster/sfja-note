@@ -627,15 +627,36 @@ Theorem all3_spec : forall b c : bool,
     orb
       (andb b c)
       (orb (negb b)
-               (negb c))
+           (negb c))
   = true.
-Proof.
-Admitted.
+Proof. (* 予想: destructが必要。inductionいらない。 *)
+  intros b c.
+  destruct b.
+    Case "b=true". simpl.
+      destruct c. reflexivity. reflexivity.
+    Case "b=false". reflexivity.
+  Qed.
 
 Theorem mult_plus_distr_r : forall n m p : nat,
   (n + m) * p = (n * p) + (m * p).
-Proof.
-Admitted.
+Proof. (* 予想: pについてのinduction *)
+  intros n m.
+  intro p.
+  induction p as [|p'].
+    Case "p=0". rewrite -> mult_0_r.
+                rewrite -> mult_0_r.
+                rewrite -> mult_0_r. reflexivity.
+    Case "p=Sp'". rewrite <- mult_n_Sm.
+                  rewrite <- mult_n_Sm.
+                  rewrite <- mult_n_Sm.
+                  rewrite -> IHp'.
+                  (* Error: Found no subterm matching "(n + m) * p'" in the current goal. *)
+
+
+
+
+
+
 
 Theorem mult_assoc : forall n m p : nat,
   n * (m * p) = (n * m) * p.
