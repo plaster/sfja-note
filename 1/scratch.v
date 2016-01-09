@@ -650,7 +650,13 @@ Proof. (* 予想: pについてのinduction *)
                   rewrite <- mult_m_Sn.
                   rewrite <- mult_m_Sn.
                   rewrite -> IHp'.
-
+                  rewrite <- plus_assoc.
+                  rewrite <- plus_assoc.
+                  assert (H: m + (n * p' + m * p') = n * p' + (m + m * p')).
+                         rewrite -> plus_swap. reflexivity.
+                  rewrite -> H.
+                  reflexivity.
+  Qed.
 
 
 
