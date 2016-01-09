@@ -672,4 +672,17 @@ Proof. (* 予想: nについてのinductionでできる。
       rewrite -> IHn'. reflexivity.
   Qed.
 
+Theorem plus_swap' : forall n m p : nat,
+  n + (m + p) = m + (n + p).
+Proof.
+  intros n m p.
+  replace (n + p) with (p + n).
+  replace (n + (m + p)) with ((m + p) + n).
+  rewrite -> plus_assoc. reflexivity.
+  Case "proof of replace 1".
+    rewrite -> plus_comm. reflexivity.
+  Case "proof of replace 2".
+    rewrite -> plus_comm. reflexivity.
+  Qed.
+
 End Playground2.
