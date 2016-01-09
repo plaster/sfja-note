@@ -646,11 +646,11 @@ Proof. (* 予想: pについてのinduction *)
     Case "p=0". rewrite -> mult_0_r.
                 rewrite -> mult_0_r.
                 rewrite -> mult_0_r. reflexivity.
-    Case "p=Sp'". rewrite <- mult_n_Sm.
-                  rewrite <- mult_n_Sm.
-                  rewrite <- mult_n_Sm.
+    Case "p=Sp'". rewrite <- mult_m_Sn.
+                  rewrite <- mult_m_Sn.
+                  rewrite <- mult_m_Sn.
                   rewrite -> IHp'.
-                  (* Error: Found no subterm matching "(n + m) * p'" in the current goal. *)
+
 
 
 
