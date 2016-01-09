@@ -659,14 +659,12 @@ Proof. (* 予想: pについてのinduction *)
   Qed.
 
 
-
-
-
-
-
 Theorem mult_assoc : forall n m p : nat,
   n * (m * p) = (n * m) * p.
-Proof.
-Admitted.
+Proof. (* 予想: nについてのinductionでできる。
+          が、destructと分配則と交換則でいけそうな気もするので試してみる *)
+  intros n m p.
+  admit.
+  Qed.
 
 End Playground2.
