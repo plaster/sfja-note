@@ -664,7 +664,12 @@ Theorem mult_assoc : forall n m p : nat,
 Proof. (* 予想: nについてのinductionでできる。
           が、destructと分配則と交換則でいけそうな気もするので試してみる *)
   intros n m p.
-  admit.
+  induction n as [|n'].
+    Case "n=0". reflexivity.
+    Case "n=Sn'".
+      simpl. rewrite -> mult_plus_distr_r.
+      (* n' * (m * p) = n' * m * p がでてきてしまったのでやっぱりinduction必要だった *)
+      rewrite -> IHn'. reflexivity.
   Qed.
 
 End Playground2.
