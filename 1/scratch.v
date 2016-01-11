@@ -685,4 +685,45 @@ Proof.
     rewrite -> plus_comm. reflexivity.
   Qed.
 
+
+(* (a) *)
+Inductive bin : Type :=
+| B : bin
+| Ev : bin -> bin
+| Od : bin -> bin
+.
+
+(* (b) *)
+Fixpoint bin_succ (x : bin) : bin :=
+match x with
+| B => Od B
+| Ev x' => Od x'
+| Od x' => Ev (bin_succ x')
+end.
+
+Fixpoint nat_from_bin ( x : bin ) : nat :=
+match x with
+| B => 0
+| Ev x' => nat_from_bin x' + nat_from_bin x'
+| Od x' => S(nat_from_bin x' + nat_from_bin x')
+end.
+
+(* (c) *)
+
+Theorem binsucc_binnat_compatible: forall x : bin,
+  nat_from_bin(bin_succ(x)) = S(nat_from_bin(x)).
+
+Proof.
+  intro x.
+  induction x as [|x'|x'].
+  Case "x=B".
+    reflexivity.
+  Case "x=Ev x'".
+    simpl. reflexivity.
+  Case "x=Od x'".
+    simpl.
+    rewrite -> IHx'. simpl. rewrite -> plus_comm. simpl.
+    reflexivity.
+    Qed.
+
 End Playground2.
