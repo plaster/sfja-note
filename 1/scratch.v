@@ -726,4 +726,27 @@ Proof.
     reflexivity.
     Qed.
 
+(* exercise binary_inverse *)
+(* (a) *)
+
+Fixpoint bin_from_nat ( n : nat ) : bin :=
+match n with
+| O => B
+| S n' => bin_succ (bin_from_nat n')
+end.
+
+Theorem nat_from_bin_from_nat : forall n : nat,
+  nat_from_bin ( bin_from_nat n ) = n.
+
+Proof.
+  intros n.
+  induction n as [|n'].
+  Case "n=0". simpl. reflexivity.
+  Case "n=S n'".
+    simpl.
+    rewrite -> binsucc_binnat_compatible.
+    rewrite -> IHn'.
+    reflexivity.
+  Qed.
+
 End Playground2.
