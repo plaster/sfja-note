@@ -749,4 +749,11 @@ Proof.
     reflexivity.
   Qed.
 
+(* (b)
+  O に対応する二進表現が複数、というか無限にあるため。
+  B, Ev B, Ev( Ev B ), ...
+  これらはいわゆる leading zero に相当する。
+ *)
+
+
 End Playground2.
