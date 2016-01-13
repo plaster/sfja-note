@@ -755,5 +755,29 @@ Proof.
   これらはいわゆる leading zero に相当する。
  *)
 
+(* (c) *)
+
+
+Fixpoint normalize ( x : bin ) : bin :=
+  bin_from_nat ( nat_from_bin x ).
+
+Theorem normalize_fixpoint : forall x : bin,
+  normalize x = normalize(normalize x).
+
+Proof.
+  intros x.
+  induction x as [|x'|x'].
+  Case "x=B". reflexivity.
+  Case "x=Ev x'".
+    simpl.
+    destruct (nat_from_bin x') as [|n'].
+    SCase "n=0". reflexivity.
+    SCase "n=Sn'". simpl. rewrite -> plus_comm.
+    simpl.
+    admit.
+  Case "x=Od x'".
+    admit.
+  Qed.
+
 
 End Playground2.
