@@ -757,30 +757,19 @@ Proof.
 
 (* (c) *)
 
-Fixpoint bin_plus ( x y : bin ) : bin :=
-  match x with
-  | B => y
-  | Ev x' =>
-    match y with
-    | B => x
-    | Ev y' => Ev( bin_plus x' y' )
-    | Od y' => Od( bin_plus x' y' )
-    end
-  | Od x' =>
-    match y with
-    | B => x
-    | Ev y' => Od (bin_plus x' y')
-    | Od y' => Ev ( bin_succ ( bin_plus x' y' ) )
-    end
-  end.
-
-Theorem binplus_binnat_compatible : forall x y : bin,
-  nat_from_bin( bin_plus x y ) = (nat_from_bin x) + (nat_from_bin y).
-Proof.
-  Admitted.
-
 Fixpoint normalize ( x : bin ) : bin :=
   bin_from_nat ( nat_from_bin x ).
+
+Lemma normalize_ev : forall x : bin,
+  normalize (normalize (Ev x)) = normalize (Ev (normalize x)).
+Proof.
+  intros x.
+  induction x as [|x'|x'].
+  Case "x=B". reflexivity.
+  Case "x=Ev x'".
+    simpl.
+    rewrite -> nat_from_bin_from_nat.
+    rewrite -> nat_from_bin_from_nat.
 
 Theorem normalize_fixpoint : forall x : bin,
   normalize x = normalize(normalize x).
@@ -790,7 +779,12 @@ Proof.
   induction x as [|x'|x'].
   Case "x=B". reflexivity.
   Case "x=Ev x'".
-    simpl. rewrite <- binplus_binnat_compatible.
+    simpl.
+    induction x' as [|x''|x''].
+    SCase "x'=B". reflexivity.
+    SCase "x'=Ev x''".
+      simpl.
+      rewrite <- plus_assoc.
     admit.
   Case "x=Od x'".
     admit.
