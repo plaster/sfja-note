@@ -760,16 +760,25 @@ Proof.
 Fixpoint normalize ( x : bin ) : bin :=
   bin_from_nat ( nat_from_bin x ).
 
-Lemma normalize_ev : forall x : bin,
-  normalize (normalize (Ev x)) = normalize (Ev (normalize x)).
+Theorem normalize_binsucc : forall x : bin,
+   normalize (bin_succ x) = bin_succ (normalize x).
 Proof.
   intros x.
-  induction x as [|x'|x'].
+  destruct x as [|x'|x'].
   Case "x=B". reflexivity.
   Case "x=Ev x'".
+    simpl. reflexivity.
+  Case "x=Od x'".
     simpl.
-    rewrite -> nat_from_bin_from_nat.
-    rewrite -> nat_from_bin_from_nat.
+    rewrite -> binsucc_binnat_compatible.
+    replace (S (nat_from_bin x') + S (nat_from_bin x')) with
+      (S(S(nat_from_bin x' + nat_from_bin x'))).
+    SCase "original goal".
+      simpl.
+      reflexivity.
+    SCase "replaced goal".
+      simpl. rewrite -> plus_n_Sm. reflexivity.
+  Qed.
 
 Theorem normalize_fixpoint : forall x : bin,
   normalize x = normalize(normalize x).
