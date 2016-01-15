@@ -780,6 +780,20 @@ Proof.
       simpl. rewrite -> plus_n_Sm. reflexivity.
   Qed.
 
+Theorem normalize_nat : forall n : nat,
+  nat_from_bin( normalize ( bin_from_nat n ) ) = n.
+Proof.
+  intros n.
+  induction n as [|n'].
+  Case "n=0". reflexivity.
+  Case "n=Sn'".
+    simpl.
+    rewrite -> normalize_binsucc.
+    rewrite -> binsucc_binnat_compatible.
+    rewrite -> IHn'.
+    reflexivity.
+  Qed.
+
 Theorem normalize_fixpoint : forall x : bin,
   normalize x = normalize(normalize x).
 
