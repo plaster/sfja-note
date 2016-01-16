@@ -799,6 +799,8 @@ Theorem normalize_fixpoint : forall x : bin,
 
 Proof.
   intros x.
+  replace (normalize x) with (bin_from_nat(nat_from_bin x)).
+  
   induction x as [|x'|x'].
   Case "x=B". reflexivity.
   Case "x=Ev x'".
