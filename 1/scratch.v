@@ -794,23 +794,32 @@ Proof.
     reflexivity.
   Qed.
 
+Fixpoint bin_plus (x y : bin) : bin :=
+  match x with
+  | B => y
+  | Ev x' => match y with
+    | B => x
+    | Ev y' => Ev (bin_plus x' y')
+    | Od y' => Od (bin_plus x' y')
+    end
+  | Od x' => match y with
+    | B => x
+    | Ev y' => Od (bin_plus x' y')
+    | Od y' => bin_succ(bin_succ(Ev (bin_plus x' y')))
+    end
+  end.
+
 Theorem normalize_fixpoint : forall x : bin,
   normalize x = normalize(normalize x).
 
 Proof.
   intros x.
-  replace (normalize x) with (bin_from_nat(nat_from_bin x)).
   
   induction x as [|x'|x'].
   Case "x=B". reflexivity.
   Case "x=Ev x'".
     simpl.
-    induction x' as [|x''|x''].
-    SCase "x'=B". reflexivity.
-    SCase "x'=Ev x''".
-      simpl.
-      rewrite <- plus_assoc.
-    admit.
+
   Case "x=Od x'".
     admit.
   Qed.
