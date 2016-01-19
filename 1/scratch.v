@@ -809,6 +809,18 @@ Fixpoint bin_plus (x y : bin) : bin :=
     end
   end.
 
+Theorem nat_from_bin_plus : forall n m : nat,
+  bin_from_nat( n + m ) = bin_plus (bin_from_nat n) (bin_from_nat m).
+Proof.
+  admit.
+  Qed.
+
+Theorem normalize_bin_plus : forall x y : bin,
+  bin_plus (normalize x) (normalize y) = normalize (bin_plus x y).
+Proof.
+  admit.
+  Qed.
+
 Theorem normalize_fixpoint : forall x : bin,
   normalize x = normalize(normalize x).
 
@@ -819,6 +831,13 @@ Proof.
   Case "x=B". reflexivity.
   Case "x=Ev x'".
     simpl.
+    rewrite -> nat_from_bin_plus.
+    replace ( bin_from_nat (nat_from_bin x')) with (normalize x').
+    SCase "original goal".
+      rewrite <- normalize_bin_plus.
+      rewrite <- IHx'. reflexivity.
+    SCase "replaced goal".
+      reflexivity.
 
   Case "x=Od x'".
     admit.
