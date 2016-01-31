@@ -837,10 +837,23 @@ Proof.
       rewrite <- normalize_bin_plus.
       rewrite <- IHx'. reflexivity.
     SCase "replaced goal".
-      reflexivity.
-
+      destruct x' as [|x''|x''].
+        SSCase "B". reflexivity.
+        SSCase "Ev".
+          simpl. reflexivity.
+        SSCase "Od".
+          simpl. reflexivity.
   Case "x=Od x'".
-    admit.
+    simpl.
+    rewrite -> nat_from_bin_plus.
+    rewrite -> normalize_binsucc.
+    rewrite <- normalize_bin_plus.
+    replace ( bin_from_nat (nat_from_bin x')) with (normalize x').
+    SCase "original goal".
+      rewrite <- IHx'. reflexivity.
+    SCase "replaced goal".
+      destruct x' as [|x''|x''].
+        reflexivity. reflexivity. reflexivity.
   Qed.
 
 
