@@ -809,10 +809,42 @@ Fixpoint bin_plus (x y : bin) : bin :=
     end
   end.
 
+Lemma binsucc_left_dec : forall x y : bin,
+  bin_succ (bin_plus x y) = bin_plus (bin_succ x) y.
+Proof.
+  intros x y.
+  destruct x as [|x'|x'].
+  Case "B". simpl.
+    destruct y as [|y'|y'].
+    reflexivity. reflexivity. reflexivity.
+  Case "Ev". simpl.
+    destruct y as [|y'|y'].
+    SCase "B". reflexivity.
+    SCase "Ev". reflexivity.
+    SCase "Od". reflexivity.
+  Case "Od". simpl.
+    induction y as [|y'|y'].
+    SCase "B". reflexivity.
+    SCase "Ev".
+      destruct y' as [|y''|y''].
+      admit.
+      admit.
+      admit.
+    SCase "Od".
+      admit.
+  Qed.
+
 Theorem nat_from_bin_plus : forall n m : nat,
   bin_from_nat( n + m ) = bin_plus (bin_from_nat n) (bin_from_nat m).
 Proof.
-  admit.
+  intros n m.
+  induction n as [|n'].
+  Case "0". reflexivity.
+  Case "n'".
+    simpl.
+    rewrite -> IHn'.
+    rewrite -> binsucc_left_dec.
+    reflexivity.
   Qed.
 
 Theorem normalize_bin_plus : forall x y : bin,
