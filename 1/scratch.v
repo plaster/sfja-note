@@ -805,7 +805,7 @@ Fixpoint bin_plus (x y : bin) : bin :=
   | Od x' => match y with
     | B => x
     | Ev y' => Od (bin_plus x' y')
-    | Od y' => bin_succ(bin_succ(Ev (bin_plus x' y')))
+    | Od y' => Ev (bin_succ (bin_plus x' y'))
     end
   end.
 
@@ -813,19 +813,20 @@ Lemma binsucc_left_dec : forall x y : bin,
   bin_succ (bin_plus x y) = bin_plus (bin_succ x) y.
 Proof.
   intros x y.
-  destruct x as [|x'|x'].
+  induction x as [|x'|x'].
   Case "B". simpl.
     destruct y as [|y'|y'].
     reflexivity. reflexivity. reflexivity.
-  Case "Ev". simpl.
+  Case "Ev".
+    simpl.
     destruct y as [|y'|y'].
     SCase "B". reflexivity.
     SCase "Ev". reflexivity.
     SCase "Od". reflexivity.
   Case "Od". simpl.
-    induction y as [|y'|y'].
+    destruct y as [|y'|y'].
     SCase "B". reflexivity.
-    SCase "Ev".
+    SCase "Ev". simpl.
       destruct y' as [|y''|y''].
       admit.
       admit.
