@@ -847,6 +847,15 @@ Proof.
     reflexivity.
   Qed.
 
+Theorem bin_plus_right_B : forall x : bin,
+  bin_plus x B = x.
+Proof.
+  destruct x as [|x'|x'].
+  Case "B". reflexivity.
+  Case "Ev". reflexivity.
+  Case "Od". reflexivity.
+  Qed.
+
 Theorem normalize_bin_plus : forall x y : bin,
   bin_plus (normalize x) (normalize y) = normalize (bin_plus x y).
 Proof.
