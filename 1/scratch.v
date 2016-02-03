@@ -829,8 +829,9 @@ Proof.
     SCase "Ev". simpl.
       rewrite -> IHx'.
       reflexivity.
-    SCase "Od".
-      admit.
+    SCase "Od". simpl.
+      rewrite -> IHx'.
+      reflexivity.
   Qed.
 
 Theorem nat_from_bin_plus : forall n m : nat,
