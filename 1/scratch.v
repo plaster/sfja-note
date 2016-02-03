@@ -812,7 +812,7 @@ Fixpoint bin_plus (x y : bin) : bin :=
 Lemma binsucc_left_dec : forall x y : bin,
   bin_succ (bin_plus x y) = bin_plus (bin_succ x) y.
 Proof.
-  intros x y.
+  intros x.
   induction x as [|x'|x'].
   Case "B". simpl.
     destruct y as [|y'|y'].
@@ -827,10 +827,8 @@ Proof.
     destruct y as [|y'|y'].
     SCase "B". reflexivity.
     SCase "Ev". simpl.
-      destruct y' as [|y''|y''].
-      admit.
-      admit.
-      admit.
+      rewrite -> IHx'.
+      reflexivity.
     SCase "Od".
       admit.
   Qed.
