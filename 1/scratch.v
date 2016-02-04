@@ -856,6 +856,16 @@ Proof.
   Case "Od". reflexivity.
   Qed.
 
+Theorem normalize_expand : forall x : bin,
+  normalize x = bin_from_nat (nat_from_bin x).
+Proof.
+  intro x.
+  destruct x as [|x'|x'].
+  Case "B". reflexivity.
+  Case "Ev". reflexivity.
+  Case "Od". reflexivity.
+  Qed.
+
 Theorem normalize_bin_plus : forall x y : bin,
   bin_plus (normalize x) (normalize y) = normalize (bin_plus x y).
 Proof.
