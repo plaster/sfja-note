@@ -866,6 +866,25 @@ Proof.
   Case "Od". reflexivity.
   Qed.
 
+Theorem binplus_comm : forall x y : bin,
+  bin_plus x y = bin_plus y x.
+Proof.
+  intro x.
+  induction x as [|x'|x'].
+  Case "B". simpl.
+    destruct y. reflexivity. reflexivity. reflexivity.
+  Case "Ev". simpl.
+    destruct y.
+    SCase "B". reflexivity.
+    SCase "Ev". simpl. rewrite -> IHx'. reflexivity.
+    SCase "Od". simpl. rewrite -> IHx'. reflexivity.
+  Case "Od". simpl.
+    destruct y.
+    SCase "B". reflexivity.
+    SCase "Od". simpl. rewrite -> IHx'. reflexivity.
+    SCase "Ev". simpl. rewrite -> IHx'. reflexivity.
+  Qed.
+
 Theorem normalize_bin_plus : forall x y : bin,
   bin_plus (normalize x) (normalize y) = normalize (bin_plus x y).
 Proof.
