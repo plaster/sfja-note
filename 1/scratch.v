@@ -869,7 +869,41 @@ Proof.
 Theorem normalize_bin_plus : forall x y : bin,
   bin_plus (normalize x) (normalize y) = normalize (bin_plus x y).
 Proof.
-  admit.
+  intro x.
+  induction x as [|x'|x'].
+  Case "B". reflexivity.
+  Case "Ev". simpl.
+    destruct y as [|y'|y'].
+    SCase "B". simpl.
+      rewrite -> nat_from_bin_plus.
+      rewrite -> bin_plus_right_B.
+      reflexivity.
+    SCase "Ev". simpl.
+      rewrite <- nat_from_bin_plus.
+      rewrite -> plus_assoc.
+      rewrite -> plus_comm.
+      rewrite -> plus_assoc.
+      rewrite -> plus_assoc.
+      assert (H: nat_from_bin y' + nat_from_bin x' = nat_from_bin x' + nat_from_bin y').
+        Proof. rewrite -> plus_comm. reflexivity.
+      rewrite -> H.
+      replace (nat_from_bin x' + nat_from_bin y' + nat_from_bin x' + nat_from_bin y')
+        with (nat_from_bin x' + nat_from_bin y' + (nat_from_bin x' + nat_from_bin y')).
+      SSCase "original".
+        rewrite -> nat_from_bin_plus.
+        rewrite -> nat_from_bin_plus.
+        rewrite -> nat_from_bin_plus.
+        rewrite <- normalize_expand.
+        rewrite <- normalize_expand.
+        rewrite <- normalize_expand.
+        rewrite -> IHx'.
+        reflexivity.
+      SSCase "replaced".
+        rewrite -> plus_assoc. reflexivity.
+    SCase "Od".
+      admit.
+  Case "Od".
+    admit.
   Qed.
 
 Theorem normalize_fixpoint : forall x : bin,
