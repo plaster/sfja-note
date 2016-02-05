@@ -920,7 +920,33 @@ Proof.
       SSCase "replaced".
         rewrite -> plus_assoc. reflexivity.
     SCase "Od".
-      admit.
+      simpl.
+      rewrite -> binplus_comm.
+      rewrite <- binsucc_left_dec.
+      assert (H:
+        (bin_plus (bin_from_nat (nat_from_bin y' + nat_from_bin y'))
+                  (bin_from_nat (nat_from_bin x' + nat_from_bin x')))
+      = (bin_from_nat
+          (nat_from_bin (bin_plus x' y') + nat_from_bin (bin_plus x' y')))).
+      SSCase "H".
+        rewrite <- nat_from_bin_plus.
+        assert (H2:
+          (nat_from_bin y' + nat_from_bin y' + (nat_from_bin x' + nat_from_bin x'))
+        = (nat_from_bin x' + nat_from_bin y' + (nat_from_bin x' + nat_from_bin y'))).
+        SSSCase "H2".
+          admit.
+
+        rewrite -> H2.
+        rewrite -> nat_from_bin_plus.
+        rewrite -> nat_from_bin_plus.
+        rewrite -> nat_from_bin_plus.
+        rewrite <- normalize_expand.
+        rewrite <- normalize_expand.
+        rewrite <- normalize_expand.
+        rewrite -> IHx'.
+        reflexivity.
+      SSCase "original".
+        rewrite -> H. reflexivity.
   Case "Od".
     admit.
   Qed.
