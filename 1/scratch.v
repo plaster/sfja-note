@@ -1038,5 +1038,18 @@ Proof.
         reflexivity. reflexivity. reflexivity.
   Qed.
 
+(* Exercise 'decreasing' *)
+(*
+Fixpoint swaprec (n m : nat) : nat :=
+match n with
+| 0 => 0
+| S n' => match m with
+  | 0 => 0
+  | S m' => swaprec m' n'
+  end
+end.
+
+  =>  Error: Cannot guess decreasing argument of fix.
+*)
 
 End Playground2.
