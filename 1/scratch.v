@@ -934,7 +934,15 @@ Proof.
           (nat_from_bin y' + nat_from_bin y' + (nat_from_bin x' + nat_from_bin x'))
         = (nat_from_bin x' + nat_from_bin y' + (nat_from_bin x' + nat_from_bin y'))).
         SSSCase "H2".
-          admit.
+          rewrite -> plus_assoc.
+          rewrite -> plus_comm.
+          rewrite <- plus_assoc.
+          replace (nat_from_bin y' + nat_from_bin x')
+            with  (nat_from_bin x' + nat_from_bin y').
+          SSSSCase "original".
+            rewrite -> plus_assoc. reflexivity.
+          SSSSCase "replaced".
+            rewrite -> plus_comm. reflexivity.
 
         rewrite -> H2.
         rewrite -> nat_from_bin_plus.
