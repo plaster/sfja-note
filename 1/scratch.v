@@ -847,6 +847,43 @@ Proof.
     reflexivity.
   Qed.
 
+Theorem plus_nnmm : forall n m : nat,
+  (n + n) + (m + m) = (n + m) + (n + m).
+Proof.
+  intros n m.
+  rewrite -> plus_comm.
+  rewrite -> plus_assoc.
+  rewrite -> plus_comm.
+  rewrite <- plus_assoc.
+  replace (m + n) with (n + m).
+  assert (H: forall p : nat, n + (m + p) = (n + m) + p).
+    intro p. rewrite -> plus_assoc. reflexivity.
+  rewrite -> H. reflexivity.
+  rewrite -> plus_comm. reflexivity.
+  Qed.
+
+Theorem bin_from_nat_plus : forall x y : bin,
+  nat_from_bin (bin_plus x y) = (nat_from_bin x) + (nat_from_bin y).
+Proof.
+  intro x.
+  induction x as [|x'|x'].
+  Case "B". reflexivity.
+  Case "Ev". simpl.
+    destruct y as [|y'|y'].
+    SCase "B". simpl. rewrite -> plus_0_r. reflexivity.
+    SCase "Ev". simpl. rewrite -> IHx'. rewrite -> plus_nnmm. reflexivity.
+    SCase "Od". simpl. rewrite -> IHx'.
+      rewrite <- plus_n_Sm. rewrite -> plus_nnmm. reflexivity.
+  Case "Od". simpl.
+    destruct y as [|y'|y'].
+    SCase "B". simpl. rewrite -> plus_0_r. reflexivity.
+    SCase "Ev". simpl. rewrite -> IHx'. rewrite -> plus_nnmm. reflexivity.
+    SCase "Od". simpl. rewrite -> binsucc_binnat_compatible. rewrite -> IHx'.
+      rewrite <- plus_n_Sm.
+      rewrite <- plus_n_Sm.
+      rewrite -> plus_nnmm. reflexivity.
+  Qed.
+
 Theorem bin_plus_right_B : forall x : bin,
   bin_plus x B = x.
 Proof.
