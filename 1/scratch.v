@@ -936,26 +936,8 @@ Proof.
       reflexivity.
     SCase "Ev". simpl.
       rewrite <- nat_from_bin_plus.
-      rewrite -> plus_assoc.
-      rewrite -> plus_comm.
-      rewrite -> plus_assoc.
-      rewrite -> plus_assoc.
-      assert (H: nat_from_bin y' + nat_from_bin x' = nat_from_bin x' + nat_from_bin y').
-        Proof. rewrite -> plus_comm. reflexivity.
-      rewrite -> H.
-      replace (nat_from_bin x' + nat_from_bin y' + nat_from_bin x' + nat_from_bin y')
-        with (nat_from_bin x' + nat_from_bin y' + (nat_from_bin x' + nat_from_bin y')).
-      SSCase "original".
-        rewrite -> nat_from_bin_plus.
-        rewrite -> nat_from_bin_plus.
-        rewrite -> nat_from_bin_plus.
-        rewrite <- normalize_expand.
-        rewrite <- normalize_expand.
-        rewrite <- normalize_expand.
-        rewrite -> IHx'.
-        reflexivity.
-      SSCase "replaced".
-        rewrite -> plus_assoc. reflexivity.
+      rewrite -> bin_from_nat_plus.
+      rewrite -> plus_nnmm. reflexivity.
     SCase "Od".
       simpl.
       rewrite -> binplus_comm.
@@ -967,29 +949,9 @@ Proof.
           (nat_from_bin (bin_plus x' y') + nat_from_bin (bin_plus x' y')))).
       SSCase "H".
         rewrite <- nat_from_bin_plus.
-        assert (H2:
-          (nat_from_bin y' + nat_from_bin y' + (nat_from_bin x' + nat_from_bin x'))
-        = (nat_from_bin x' + nat_from_bin y' + (nat_from_bin x' + nat_from_bin y'))).
-        SSSCase "H2".
-          rewrite -> plus_assoc.
-          rewrite -> plus_comm.
-          rewrite <- plus_assoc.
-          replace (nat_from_bin y' + nat_from_bin x')
-            with  (nat_from_bin x' + nat_from_bin y').
-          SSSSCase "original".
-            rewrite -> plus_assoc. reflexivity.
-          SSSSCase "replaced".
-            rewrite -> plus_comm. reflexivity.
-
-        rewrite -> H2.
-        rewrite -> nat_from_bin_plus.
-        rewrite -> nat_from_bin_plus.
-        rewrite -> nat_from_bin_plus.
-        rewrite <- normalize_expand.
-        rewrite <- normalize_expand.
-        rewrite <- normalize_expand.
-        rewrite -> IHx'.
-        reflexivity.
+        rewrite -> bin_from_nat_plus.
+        rewrite -> plus_comm.
+        rewrite -> plus_nnmm. reflexivity.
       SSCase "original".
         rewrite -> H. reflexivity.
   Case "Od".
