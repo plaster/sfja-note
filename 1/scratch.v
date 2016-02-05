@@ -993,7 +993,32 @@ Proof.
       SSCase "original".
         rewrite -> H. reflexivity.
   Case "Od".
-    admit.
+    simpl.
+    destruct y as [|y'|y'].
+    SCase "B". simpl. rewrite <- binsucc_left_dec.
+      assert (H:
+        (bin_plus (bin_from_nat (nat_from_bin x' + nat_from_bin x')) B)
+      =           (bin_from_nat (nat_from_bin x' + nat_from_bin x'))
+      ).
+      SSCase "H".
+        rewrite -> binplus_comm. simpl. reflexivity.
+      SSCase "original". rewrite -> H. reflexivity.
+    SCase "Ev". simpl. rewrite <- binsucc_left_dec.
+      assert (H:
+        (bin_plus (bin_from_nat (nat_from_bin x' + nat_from_bin x'))
+                  (bin_from_nat (nat_from_bin y' + nat_from_bin y')))
+      =
+        (bin_from_nat
+          ( nat_from_bin (bin_plus x' y')
+          + nat_from_bin (bin_plus x' y')))
+      ).
+      SSCase "H".
+        rewrite <- nat_from_bin_plus.
+        rewrite -> bin_from_nat_plus.
+        rewrite -> plus_nnmm. reflexivity.
+      SSCase "original". rewrite -> H. reflexivity.
+    SCase "Od". simpl.
+      admit.
   Qed.
 
 Theorem normalize_fixpoint : forall x : bin,
