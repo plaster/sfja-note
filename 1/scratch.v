@@ -922,6 +922,15 @@ Proof.
     SCase "Ev". simpl. rewrite -> IHx'. reflexivity.
   Qed.
 
+Theorem succ_natbin : forall n : nat,
+  bin_from_nat(S n) = bin_succ(bin_from_nat n).
+Proof.
+  intro n.
+  destruct n as [|n'].
+  Case "O". reflexivity.
+  Case "S". reflexivity.
+  Qed.
+
 Theorem normalize_bin_plus : forall x y : bin,
   bin_plus (normalize x) (normalize y) = normalize (bin_plus x y).
 Proof.
@@ -980,7 +989,18 @@ Proof.
         rewrite -> plus_nnmm. reflexivity.
       SSCase "original". rewrite -> H. reflexivity.
     SCase "Od". simpl.
-      admit.
+      rewrite <- binsucc_left_dec.
+      rewrite -> binplus_comm.
+      rewrite <- binsucc_left_dec.
+      rewrite -> binplus_comm.
+      rewrite -> binsucc_binnat_compatible.
+      rewrite <- plus_n_Sm.
+      rewrite -> succ_natbin.
+      simpl.
+      rewrite <- nat_from_bin_plus.
+      rewrite -> bin_from_nat_plus.
+      rewrite -> plus_nnmm.
+      reflexivity.
   Qed.
 
 Theorem normalize_fixpoint : forall x : bin,
